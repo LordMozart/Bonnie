@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,12 +12,8 @@
             background: linear-gradient(45deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
-            position: relative;
             font-family: Calibri, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            position: relative;
         }
         
         @keyframes gradient {
@@ -40,6 +36,15 @@
         
         .hidden {
             display: none;
+        }
+        
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            text-align: center;
+            position: relative;
         }
         
         .message {
@@ -69,7 +74,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            z-index: 20;
+            z-index: 20; /* Ensure button is above other content */
         }
         
         canvas {
@@ -84,8 +89,10 @@
     </style>
 </head>
 <body>
-    <button id="startButton">Start Celebration</button>
-    <div class="hidden message">Happy Birthday Bonnie</div>
+    <div class="centered-content">
+        <button id="startButton">Start Celebration</button>
+        <div class="hidden message">Happy Birthday Bonnie</div>
+    </div>
     <canvas id="confettiCanvas" class="hidden"></canvas>
     <audio id="backgroundMusic" src="your-music-file.mp3" loop></audio>
 
