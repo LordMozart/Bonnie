@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -87,6 +87,14 @@
             pointer-events: none;
             z-index: 5;
         }
+        
+        .buttonContainer {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: 20;
+        }
     </style>
 </head>
 <body>
@@ -95,19 +103,13 @@
         <div class="hidden message">Happy Birthday Bonnie</div>
     </div>
     <canvas id="confettiCanvas" class="hidden"></canvas>
-    <audio id="backgroundMusic" src="your-music-file.mp3" loop></audio>
-
-<div id="content">
-  <br />
-  <div class="buttonContainer">
-    <button id="stopButton">Stop Confetti</button>
-    <button id="startButton">Drop Confetti</button>
-  </div>
-</div>
-<canvas id="canvas"></canvas>
-
+    <div class="buttonContainer">
+        <button id="stopButton">Stop Confetti</button>
+        <button id="startConfettiButton">Drop Confetti</button>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <script src="script.js"></script>
-    <style src="style.css"></style>
     <script>
         // Confetti effect with tsparticles
         tsParticles.load("confettiCanvas", {
@@ -148,6 +150,15 @@
             document.getElementById('confettiCanvas').classList.remove('hidden');
             document.getElementById('backgroundMusic').play();
             this.classList.add('hidden'); // Hide the button
+        });
+        
+        // Handle confetti controls
+        document.getElementById('startConfettiButton').addEventListener('click', () => {
+            tsParticles.load("confettiCanvas", { /* same configuration as above or adjusted */ });
+        });
+        
+        document.getElementById('stopButton').addEventListener('click', () => {
+            tsParticles.destroy("confettiCanvas");
         });
     </script>
 </body>
