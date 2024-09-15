@@ -1,4 +1,4 @@
-const end = Date.now() + 15 * 1000;
+const end = Date.now() + 5000 * 1000;
 
 // go Buckeyes!
 const colors = ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"];
