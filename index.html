@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Bonnie</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            position: relative;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+        
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">Happy Birthday Bonnie</div>
+    <canvas id="confettiCanvas"></canvas>
+    <script>
+        // Confetti effect
+        (function() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            const particles = [];
+            const colors = ['#ff0000', '#ff9900', '#33cc33', '#3399ff', '#cc33ff'];
+            const numParticles = 200;
+            let width, height;
+            
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            
+            function createParticle(x, y) {
+                const size = Math.random() * 5 + 5;
+                const speed = Math.random() * 5 + 2;
+                const angle = Math.random() * 2 * Math.PI;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push({
+                    x, y,
+                    size,
+                    speed,
+                    angle,
+                    color,
+                    lifetime: Math.random() * 30 + 30
+                });
+            }
+            
+            function updateParticles() {
+                for (const particle of particles) {
+                    particle.x += Math.cos(particle.angle) * particle.speed;
+                    particle.y += Math.sin(particle.angle) * particle.speed;
+                    particle.lifetime--;
+                    if (particle.lifetime <= 0) {
+                        const index = particles.indexOf(particle);
+                        if (index > -1) {
+                            particles.splice(index, 1);
+                        }
+                    }
+                }
+            }
+            
+            function drawParticles() {
+                ctx.clearRect(0, 0, width, height);
+                for (const particle of particles) {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, 2 * Math.PI);
+                    ctx.fillStyle = particle.color;
+                    ctx.fill();
+                }
+            }
+            
+            function loop() {
+                updateParticles();
+                drawParticles();
+                requestAnimationFrame(loop);
+            }
+            
+            canvas.addEventListener('click', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                for (let i = 0; i < numParticles; i++) {
+                    createParticle(x, y);
+                }
+            });
+            
+            window.addEventListener('resize', resize);
+            resize();
+            loop();
+        })();
+    </script>
+</body>
+</html>
